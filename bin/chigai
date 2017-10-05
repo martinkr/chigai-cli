@@ -1,0 +1,98 @@
+#!/usr/bin/env node
+
+const chigaiCore = require("chigai-core");
+
+var argv = require('yargs')
+	.usage('Usage: $0 <cmd> [-w number] [-h number] [-t number] ')
+	.command('reference <uri> [options]', 'install a package (name@version)')
+	.command('regression <uri> [options]', 'install a package (name@version)')
+	.command("location", "location to request", {
+		alias: "location"
+	})
+	// .required(1, "URL is required")
+
+	.option('w', {
+		alias: 'viewportwidth',
+		default: 1024,
+		demand: false,
+		description: 'Sest the viewport width',
+		type: "number"
+	})
+	.option('h', {
+		alias: 'viewportheight',
+		default: 786,
+		demand: false,
+		description: 'Sets the viewport height',
+		type: "number"
+	})
+	.option('t', {
+		alias: 'threshold',
+		default: 0.01,
+		demand: false,
+		description: 'Sets the threshold for the image comparison, e.g. 0.01 to allow 1% difference.',
+		type: "number"
+	})
+	.option('d', {
+		alias: 'dryRun',
+		default: false,
+		demand: false,
+		description: 'Just a console output.',
+		type: "boolean"
+	})
+	.option('?', {
+		alias: 'help',
+		demand: false,
+		description: 'Display a help message',
+		type: "boolean"
+	})
+
+	.help('help')
+	.example('chigai regression http://example.com -w 786 -h 680 -t 0.5')
+	.example('chigai reference http://example.com -w 786 -h 680 -t 0.5')
+	.epilog('for more information visit https://chigai.me')
+	// .showHelpOnFail(false, 'whoops, something went wrong! run with --help')
+	.argv;
+
+(async() => {
+
+
+	let cmd = null;
+
+	// the parsed data is stored in argv.
+	// check if there's an uri
+	if (!argv.uri) {
+		process.stdout.write(`error: missing required argument 'uri'`);
+		return process.exit(1);
+	} else {
+		// check for valid commands
+		if (argv._[0] === "reference") {
+			cmd = "reference";
+		}
+		if (argv._[0] === "regression") {
+			cmd = "regression";
+		}
+		// handeled by yargs, no command just throws an error
+		/* istanbul ignore if */
+		if (!cmd) {
+			process.stdout.write(`error:\n nothing to do. specify either \"reference\" or \"regression\"`);
+			return process.exit(1);
+		}
+		try {
+			// call the chiga-core api
+			await chigaiCore[cmd](argv.uri, {
+				"vw": argv.w,
+				"vh": argv.h,
+				"threshold": argv.t,
+				// dryRun is necessary for the specs.
+				// did not manage to spy on the chigai-core calls from the bash
+				"d": argv.d
+			});
+			// everything's fine :)
+			return process.exit(0);
+		} catch (error) {
+			// oh :(
+			process.stdout.write(`error:\n ${error}`);
+			return process.exit(1);
+		}
+	}
+})();
