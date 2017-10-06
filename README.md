@@ -37,7 +37,7 @@ If you know  you changed the layout, just set a new reference item before runnin
 - ```puppeteer v0.11.0```
 - ```yargs v9.10```
 - ```cross-spawn v5.1.0```
-- 100% code coverage using ```mocha v3.5.2```, ```chai v4.1.2``` and```nyc v11.2.1``,
+- Complete testsuite based on ```mocha v3.5.2```and ```chai v4.1.2```
 
 ## Resources
 - [GoogleChrome/puppeteer - Headless Chrome Node cli](https://github.com/GoogleChrome/puppeteer)
