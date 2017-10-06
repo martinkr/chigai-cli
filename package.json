@@ -11,6 +11,9 @@
   "issues": "https://github.com/martinkr/chigai-api/issues",
   "author": "Martin Krause <github@mkrause.info> (http://martinkr.github.io)",
   "license": "MIT",
+  "engines": {
+    "node": ">=8.5.5"
+  },
   "bin": {
     "chigai": "./bin/chigai"
   },
