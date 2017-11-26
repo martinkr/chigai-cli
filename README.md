@@ -15,7 +15,7 @@ Chigai-cli provides a clean facade for chiga-core. The regression testing of a g
 Chigai-cli is designed to be used in your favourite build script.
 
 ## Regression testing
-Provide a url and options such as the viewport width (default: 1024), viewport height (default: 720) or a threshold (default: 0.01 = 1%) for the image comparison. Chigai-cli creates a new screenshot of the whole page and compares it to the last specified reference. If their difference is lower than the given threshold it will exit with ```0``, otherwise ```1```.
+Provide a url and options such as the viewport width (default: 1024), viewport height (default: 720) or a threshold (default: 0.01 = 1%) for the image comparison. Chigai-cli creates a new screenshot of the whole page and compares it to the last specified reference. If their difference is lower than the given threshold it will exit with ```0```, otherwise ```1```.
 
 ## .chigai.json
 You can store project wide setttings in this file. It takes the same key-value-pairs as the options-object. Plus an additional ```path``` property.
@@ -36,7 +36,7 @@ Use this to share your reference items (e.g. via source control, rsync ...).
 If you know  you changed the layout, just set a new reference item before running the tests again.
 
 # Installation
-```$ yarn add chigai-cli chigai-cli```
+```$ yarn add chigai-cli```
 
 # Regression test on the CLI
 ```$ chigai regression http://example.com -w 1200 -h 800 -t 0.01```
