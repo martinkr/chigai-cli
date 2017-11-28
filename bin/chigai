@@ -3,9 +3,9 @@
 const chigaiCore = require("chigai-core");
 
 var argv = require("yargs")
-	.usage("Usage: $0 <cmd> [-w number] [-h number] [-t number] ")
-	.command("reference <uri> [options]", "install a package (name@version)")
-	.command("regression <uri> [options]", "install a package (name@version)")
+	.usage("Usage: $0 <cmd> [-w number] [-h number] [-ms number] [-t number] ")
+	.command("reference <uri> [options]", "create a new reference item")
+	.command("regression <uri> [options]", "run the visual regression test)")
 
 	.option("w", {
 		alias: "viewportwidth",
@@ -19,6 +19,13 @@ var argv = require("yargs")
 		default: 786,
 		demand: false,
 		description: "Sets the viewport height",
+		type: "number"
+	})
+	.option("p", {
+		alias: "wait",
+		default: 0,
+		demand: false,
+		description: "Sets a delay between the load-event and the screenshot",
 		type: "number"
 	})
 	.option("t", {
@@ -78,6 +85,7 @@ var argv = require("yargs")
 			await chigaiCore[cmd](argv.uri, {
 				"vw": argv.w,
 				"vh": argv.h,
+				"wait": argv.ms,
 				"threshold": argv.t,
 				// dryRun is necessary for the specs.
 				// did not manage to spy on the chigai-core calls from the bash

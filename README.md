@@ -17,18 +17,39 @@ Chigai-cli is designed to be used in your favourite build script.
 ## Regression testing
 Provide a url and options such as the viewport width (default: 1024), viewport height (default: 720) or a threshold (default: 0.01 = 1%) for the image comparison. Chigai-cli creates a new screenshot of the whole page and compares it to the last specified reference. If their difference is lower than the given threshold it will exit with ```0```, otherwise ```1```.
 
-## .chigai.json
-You can store project wide setttings in this file. It takes the same key-value-pairs as the options-object. Plus an additional ```path``` property.
-### path
-There's the possiblitly to pass a custom path to chigai. It's relative to your working directory.
+### Configuration options
+Options can either be passed as arguments per call or globally  via .chigairs.json file. The options-object takes precedence.
+
+#### ```-?```
+Displays the manual.
+
+#### ```-w```
+Default: ```1024```. The with of the viewport you cant to screenshot. This will be part of the unique identifier. ```vw```in  ```.chigairc.json```
+
+#### ```-h```
+Default: ```786```. The height of the viewport you cant to screenshot. This will be part of the unique identifier. ```vh```in  ```.chigairc.json```
+
+#### ```-p```
+Default: ```0```. Wait this amount of miliseconds after the page's ```load-event``` before making the screenshot. This will not be part of the unique identifier. ```path```in  ```.chigairc.json```
+
+#### ```-t```
+Default: ```0.01```. The threshold to use for the comparison. This will not be part of the unique identifier. ```threshold```in  ```.chigairc.json```
+
+#### ```path```
+Default: ```./screenshots``` There's the possiblitly to pass a custom path to chigai. It's relative to your working directory. ```.chigairc.json```- only
 Use this to share your reference items (e.g. via source control, rsync ...).
+
+#### .chigai.json
+You can store project wide setttings in this file. It takes the same key-value-pairs as the options-object. Plus an additional ```path``` property.
+
 
 ```JavaScript
 {
 	"path" : "./myscreenshots",
 	"threshold": 0.5,
 	"vw": 1200,
-	"vh" : 800
+	"vh" : 800,
+	"wait": 5000
 }
 ```
 
