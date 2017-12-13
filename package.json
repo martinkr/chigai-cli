@@ -1,6 +1,6 @@
 {
   "name": "chigai-cli",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Chigai: modern visual regression testing. CLI module.",
   "main": "./app/main.js",
   "repository": {
