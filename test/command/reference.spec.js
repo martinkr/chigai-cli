@@ -1,4 +1,3 @@
-
 /**
  * Specs for the cli command "reference
  *
@@ -27,6 +26,7 @@ const uriStatic = `http://localhost:${port}/static`;
 
 const thisModulePath = "chigai";
 const thisModulePathFull = path.join(__dirname, "./../../bin/", thisModulePath);
+const proxyquire = require("proxyquire");
 
 describe(`the module ${thisModulePath}`, () => {
 
@@ -68,4 +68,48 @@ describe(`the module ${thisModulePath}`, () => {
 		}));
 
 	});
+
+
+	describe.skip("should call the \"core\"-package ", () => {
+
+		let thisModuleProxied;
+		// create stubs for spying on them
+		let stubModule = {
+			"regression": (uri, options) => new Promise((resolve, reject) => {
+				resolve(true);
+			}),
+			"reference": (uri, options) => new Promise((resolve, reject) => {
+				resolve(true);
+			})
+		};
+
+		let spyCoreRegression = sinon.spy(stubModule, "regression");
+		let spyCoreReference = sinon.spy(stubModule, "reference");
+
+		before(() => {
+
+			// mock dependencies
+			thisModuleProxied = proxyquire("./../../bin/" + thisModulePath, {
+				"chigai-core": {
+					"regression": spyCoreRegression,
+					"reference": spyCoreReference
+				}
+			});
+
+
+		});
+
+		beforeEach(() => {
+			spyCoreRegression.resetHistory();
+			spyCoreReference.resetHistory();
+		});
+
+		it("should pass the URI as the first parameters", (async () => {
+			await cliRun([thisModuleProxied, "reference", "http://localhost:3000/random"].join(" "));
+			spyCoreReference.should.have.been.calledWith("http://localhost:3000/random", {})
+			spyCoreRegression.should.not.have.been.called();
+		}));
+
+	});
+
 });

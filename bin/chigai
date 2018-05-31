@@ -56,7 +56,7 @@ var argv = require("yargs")
 	// .showHelpOnFail(false, "whoops, something went wrong! run with --help")
 	.argv;
 
-(async() => {
+(async () => {
 
 
 	let cmd = null;

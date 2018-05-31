@@ -14,11 +14,15 @@ Chigai is designed to be used in your tests. You can use it in your favourite te
 Chigai-cli provides a clean facade for chiga-core. The regression testing of a given url and creating a fresh reference item beforehand.
 Chigai-cli is designed to be used in your favourite build script.
 
+## Example
+```$ ./bin/chigai regression -?```
+```$ ./bin/chigai regression http://shaky-library.surge.sh/```
+
 ## Regression testing
 Provide a url and options such as the viewport width (default: 1024), viewport height (default: 720) or a threshold (default: 0.01 = 1%) for the image comparison. Chigai-cli creates a new screenshot of the whole page and compares it to the last specified reference. If their difference is lower than the given threshold it will exit with ```0```, otherwise ```1```.
 
 ### Configuration options
-Options can either be passed as arguments per call or globally  via .chigairs.json file. The options-object takes precedence.
+Options can either be passed as arguments per call or globally via .chigairs.json file. The options-object takes precedence.
 
 #### ```-?```
 Displays the manual.
